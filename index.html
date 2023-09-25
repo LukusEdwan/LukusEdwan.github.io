@@ -1,0 +1,23 @@
+---
+layout: default
+title: Home
+---
+<div> Just Another Node </div>
+
+<div>
+	<h1>About</h1>
+	<p>
+	Just someone that who lives in the information age and wants to better understand this new world. This site is a collection of some of my notes on all things information technology. You will find this landing page will have any news I might need to share in the furture. All the other links are to my notes on nmap, wireshark and more. 
+	</p>
+</div>
+
+<h1>Latest Posts</h1>
+
+<ul>
+  {% for post in site.posts %}
+    <li>
+	    <h2><a href="{{ post.url }}">{{ post.title }} : {{ post.date | date_to_string }}</a></h2>
+      {{ post.excerpt }}
+    </li>
+  {% endfor %}
+</ul>
