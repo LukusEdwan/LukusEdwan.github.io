@@ -1,10 +1,10 @@
 - name: Home
   link: /
 - name: All
-  link: /all.html
+  link: /all
 - name: Port Scanning
-  link: /portscan.html
+  link: /portscan
 - name: Packet Capture
-  link: /packetcapture.html
+  link: /packetcapture
 - name: Cheatsheets
-  link: /cheatsheet.html
+  link: /cheatsheet

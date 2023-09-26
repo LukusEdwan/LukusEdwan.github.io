@@ -35,10 +35,13 @@ plugins:
 
 include:
   - guides
-  - cheatsheets
+  - searches
 
 collections:
   guides:
+    output: true
+    permalink: /:name
+  searches:
     output: true
     permalink: /:name
 

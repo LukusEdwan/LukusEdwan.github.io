@@ -1,0 +1,14 @@
+$font-stack: Helvetica, sans-serif;
+$text-color: #e1eaf0;
+$back-color: #1b1d1f;
+
+
+.current {
+  color: white;
+}
+
+body {
+  font: 100% $font-stack;
+  color: $text-color;
+  background-color: $back-color;
+}
