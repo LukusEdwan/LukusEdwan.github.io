@@ -8,12 +8,18 @@
     {% seo %}
   </head>
   <body>
-    <div class=header>
-    	{% include navigation.html %}
+    <div>
+    	{% include header.html %}
     </div>
 
     <div class="wrapper">
     	{{ content }}
+    </div>
+
+    <div class="wrapper">
+	<div class="footer">
+		<a href="{{ site.url }}"> Take Me Home </a>
+	</div>
     </div>
   </body>
 </html>

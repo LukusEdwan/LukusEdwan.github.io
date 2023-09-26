@@ -9,6 +9,7 @@ $font-stack: Helvetica, sans-serif;
 $text-color: #e1eaf0;
 $back-color: #1b1d1f;
 $list-color: #929292;
+$ruler-color: white;
 $block-color: #ffcc00;
 $link-color: #ffcc00;
 $link-hov-color: #ffeb9b;
@@ -30,7 +31,7 @@ body {
 }
 
 a {
-  color:#ffcc00;
+  color:$link-color;
   font-size:16px;
   padding: 0 3px;
   font-weight:400;
@@ -53,7 +54,6 @@ code {
   border-radius: 10px;
 }
 
-
 blockquote {
   border-left:3px solid $block-color;
   margin:0;
@@ -66,12 +66,11 @@ table {
   border-collapse:collapse;
 }
 
-
 th {
   text-align:center;
   padding:3px 0px;
-  border-bottom:1px solid white;
-  color: white;
+  border-bottom:1px solid $ruler-color;
+  color: $ruler-color;
   font-family: $font-stack;
   font-weight: normal;
 }
@@ -85,7 +84,8 @@ td {
 hr {
   border: 0;
   outline: none;
-  height: 3px;
+  height: 1px; 
+  background: $ruler-color;
   margin: 0 0 20px;
 }
 
