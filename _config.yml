@@ -20,7 +20,7 @@
 
 title: Just Another Node
 email: LukusEdwan@gmail.com
-description: Basic blog about information technology in the modern age. See guides and cheatsheets on Wireshark, nmap, tcpdump and more
+description: Just someone that who lives in the information age and wants to better understand this new world. This site is a collection of some of my notes on all things information technology. You will find this landing page will have any news I might need to share in the furture. All the other links are to my notes on nmap, wireshark and more. 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: LukusEdwan
