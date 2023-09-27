@@ -8,20 +8,58 @@
 $font-stack: Helvetica, sans-serif;
 $text-color: #e1eaf0;
 $back-color: #1b1d1f;
+$menu-color: #111213;
 $list-color: #929292;
 $ruler-color: white;
 $block-color: #ffcc00;
 $link-color: #ffcc00;
 $link-hov-color: #ffeb9b;
-$code-font: Terminal, monospace;
+$code-font: "SourceCodeRoman-ExtraLight", Terminal, monospace;
 $code-color: #54c720;
 $code-color-back: #000000;
+$title-font: "BasicaUnicodeRegular", Arial, sans-serif;
 
 .wrapper {
   max-width:900px;
   margin:0 auto;
   position:relative;
-  padding: 0 30px;
+  padding: 80px 10px 30px 20px;
+}
+
+@media screen and (max-width: 600px) {
+  .wrapper {
+    padding: 100px 10px 30px 20px;
+  }
+}
+
+.header {
+  z-index:1;
+  width: 100%;
+  top: 0;
+  position:fixed;
+  padding: 0 20px 0 20px;
+  background-color: $menu-color;
+}
+
+.footer {
+  margin-top: 40px;
+  text-align: right;
+  bottom: 0;
+  width: 100%;
+  position:fixed;
+  background-color: $menu-color;
+}
+
+.nav {
+  margin: 0 10px;
+  padding: 20px;
+}
+
+.title {
+  font-family: $title-font;
+  font-size: 48px;
+  text-align: center;
+  margin: 5%;
 }
 
 body {
@@ -47,7 +85,7 @@ code {
   font-family: $code-font;
   color: $code-color;
   background-color: $code-color-back;
-  font-size:14px;
+  font-size:16px;
   overflow-x: auto;
   margin: 6px;
   padding: 4px 6px;
