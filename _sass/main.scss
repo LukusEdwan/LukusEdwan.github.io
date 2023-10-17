@@ -2,7 +2,7 @@
 
 $font-stack: roboto, Helvetica, sans-serif;
 $text-color: #e1eaf0;
-$back-color: #1b1d1f;
+$back-color: #090a07;
 $menu-color: #111213;
 $list-color: #929292;
 $ruler-color: white;
@@ -93,7 +93,7 @@ blockquote {
   border-left:3px solid $block-color;
   margin:0;
   padding:0 0 0 20px;
-  font-style:italic;
+  font-style:bold;
 }
 
 table {

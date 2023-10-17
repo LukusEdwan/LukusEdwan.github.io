@@ -3,117 +3,533 @@ layout: default
 tags: cheatsheet nmap portscan
 ---
 
-# Nmap Cheat Sheet
-`-h	nmap -h	nmap help screen`
+# Nmap Cheat Sheet	
+> nmap help screen\
+> -h
+
+```
+nmap -h
+```
  
 ## Nmap Scan Types
+> TCP SYN port scan (Default)\
+> -sS
+
 ```
--sS	nmap -sS target_host	TCP SYN port scan (Default)
--sT	nmap -sT target_host	TCP connect port scan (Default without root privilege)
--sU	nmap -sU target_host	UDP port scan
--sA	nmap -sA target_host	TCP ACK port scan
--sW	nmap -sW target_host	TCP Window port scan (TCP ACK scan that take advantage of RST return) ^1
--sM	nmap -sM target_host	TCP Maimon port scan (Scan invented Uriel Maimon) ^2
--sI	nmap -sI zombie_host target_host	TCP Idle Scan (Antirez's bind port scan) ^3
--sO	nmap -sO target_host	IP protocol scan (Determine which IP protocols are being used by the host)
--sN	nmap -sN target_host	TCP NULL port scan (Flag Header is 0)
--sF	nmap -sF target_host	TCP FIN port scan
--sX	nmap -sX target_host	TCP Xmas port scan (FIN, PSH, URG flags)
--sY	nmap -sY target_host	SCTP INIT ping scan (Use new layer 4 SCTP protocol) ^4
---scanflags	nmap --scanflags  URG|ACK|PSH|RST|SYN|FIN|SYNFIN|etc.	Custom Scan Type
+nmap -sS target_host
 ```
-**** 1: RST is returned. It does this by examining the TCP Window value of the RST packets returned
-TCP RST response with non-zero window field			open
-TCP RST response with zero window field				closed
-No response received (even after retransmissions)		filtered
-ICMP unreachable error (type 3, code 1, 2, 3, 9, 10, or 13)	filtered
 
-****  2: Uriel Maimon described the technique in Phrack Magazine issue #49 (November 1996). This technique is exactly the same as NULL, FIN, and Xmas scan, except that the probe is FIN/ACK. System should report if a port is open of close as stated in RPC 793 but Uriel noticed that many BSD systems drop the packet. While this option was quite useful in 1996, modern systems rarely exhibit this bug. They send a RST back for all ports, making every port appear closed. 
+> TCP connect port scan (Default without root privilege)\
+> -sT	
 
-**** 3: Antirez's idle scan, aka bind port scan, can actually scan a target without sending a single packet to the target from their own IP address. A clever side-channel attack allows for the scan to be bounced off a dumb “zombie host”. This means any IDS will report the zombie host as the attacker instead of the host scanning the network. See URL for more info: https://nmap.org/book/idlescan.html
+```
+nmap -sT target_host
+```
 
-****  4: Stream Control Transmission Protocol (SCTP) is a protocol that was designed for streaming services and other services that need real time communication. This also adds new features like multi-homing and multi-streaming compared to TCP and UDP. The INIT packet is similar to SYN TCP packet. See RFC for more information on this protocol: https://www.rfc-editor.org/rfc/rfc4960.txt
+> UDP port scan\
+> -sU	
+
+```
+nmap -sU target_host	
+```
+
+> TCP ACK port scan\
+> -sA	
+
+```
+nmap -sA target_host	
+```
+
+> TCP Window port scan (TCP ACK scan that take advantage of RST return) ^1\
+> -sW	
+
+```
+nmap -sW target_host	
+```
+
+> TCP Maimon port scan (Scan invented Uriel Maimon) ^2\
+> -sM	
+
+```
+nmap -sM target_host	
+```
+
+> TCP Idle Scan (Antirez's bind port scan) ^3\
+> -sI	
+
+```
+nmap -sI zombie_host target_host	
+```
+
+> IP protocol scan (Determine which IP protocols are being used by the host)\
+> -sO	
+
+```
+nmap -sO target_host	
+```
+
+> TCP NULL port scan (Flag Header is 0)\
+> -sN	
+
+```
+nmap -sN target_host	
+```
+
+> TCP FIN port scan\
+> -sF	
+
+```
+nmap -sF target_host	
+```
+
+> TCP Xmas port scan (FIN, PSH, URG flags)\
+> -sX	
+
+```
+nmap -sX target_host	
+```
+
+> SCTP INIT ping scan (Use new layer 4 SCTP protocol) ^4\
+> -sY	
+
+```
+nmap -sY target_host	
+```
+
+> Custom Scan Type\
+> --scanflags  URG | ACK | PSH | RST | SYN | FIN | SYNFIN | etc
+
+```
+nmap --scanflags  FLAG	
+```
+1: RST is returned. It does this by examining the TCP Window value of the RST packets returned: 
+
+| Description                                                 | Status          |
+|:------------------------------------------------------------|:----------------| 
+| TCP RST response with non-zero window field                 | open            |
+| TCP RST response with zero window field                     | closed          |
+| No response received (even after retransmissions)           | filtered        |	     
+| ICMP unreachable error (type 3, code 1, 2, 3, 9, 10, or 13) | filtered        |
+
+[source](https://nmap.org/book/scan-methods-window-scan.html)
+
+2: Uriel Maimon described the technique in Phrack Magazine issue #49 (November 1996). This technique is exactly the same as NULL, FIN, and Xmas scan, except that the probe is FIN/ACK. System should report if a port is open of close as stated in RPC 793 but Uriel noticed that many BSD systems drop the packet. While this option was quite useful in 1996, modern systems rarely exhibit this bug. They send a RST back for all ports, making every port appear closed.[source](https://nmap.org/book/scan-methods-maimon-scan.html) 
+
+3: Antirez's idle scan, aka bind port scan, can actually scan a target without sending a single packet to the target from their own IP address. A clever side-channel attack allows for the scan to be bounced off a dumb “zombie host”. This means any IDS will report the zombie host as the attacker instead of the host scanning the network. See URL for more info: https://nmap.org/book/idlescan.html [source](https://nmap.org/book/idlescan.html)
+
+4: Stream Control Transmission Protocol (SCTP) is a protocol that was designed for streaming services and other services that need real time communication. This also adds new features like multi-homing and multi-streaming compared to TCP and UDP. The INIT packet is similar to SYN TCP packet. See RFC for more information on this protocol [source](https://www.rfc-editor.org/rfc/rfc4960.txt)
 
 ## Network Discovery options
+
+> No Scan. List targets only\
+> -sL	
+
 ```
--sL	nmap -sL target_host	No Scan. List targets only
--sn	nmap -sn target_host	Disable port scanning. Host discovery only.
--sP	nmap -sP target_host	Disable port scanning. Host discovery only. (Old flag)
--Pn	nmap -Pn target_host	Disable host discovery. Port scan only.
--PS	nmap -PSport-port,port target_host	TCP SYN discovery on port x. Port 80 by default
--PA	nmap -PAport-port,port target_host	TCP ACK discovery on port x.Port 80 by default
--PU	nmap -PUport target_host	UDP discovery on port x.Port 40125 by default
--PR	nmap -PR target_host	ARP discovery on local network
--n	nmap -n target_host	Never do DNS resolution
+nmap -sL target_host	
+```
+
+> Disable port scanning. Host discovery only.\
+> -sn	
+
+```
+nmap -sn target_host	
+```
+
+> Disable port scanning. Host discovery only. (Old flag)\
+> -sP	
+
+```
+nmap -sP target_host	
+```
+
+> Disable host discovery. Port scan only.\
+> -Pn	
+
+```
+nmap -Pn target_host	
+```
+
+> TCP SYN discovery on port x. Port 80 by default\
+> -PS	
+
+```
+nmap -PSport-port,port target_host	
+```
+
+> TCP ACK discovery on port x.Port 80 by default\
+> -PA	
+
+```
+nmap -PAport-port,port target_host	
+```
+
+> UDP discovery on port x.Port 40125 by default\
+> -PU	
+
+```
+nmap -PUport target_host	
+```
+
+> ARP discovery on local network\
+> -PR	
+
+```
+nmap -PR target_host	
+```
+
+> Never do DNS resolution\
+> -n	
+
+```
+nmap -n target_host	
 ```
 
 ## Nmap Target Specification
+> Single IP
+
 ```
- nmap xx.xx.xx.xx	Single IP
- nmap xx.xx.xx.xx xx.xx.xx.xx ...	Multiple IPs
- nmap xx.xx.xx.xx-xx	Scan with a range
- nmap xx.xx.xx.xx/xx	Scan with CIDR
- nmap www.nmap.org	Scan a domain
--iL	nmap -iL ip_list_file.txt	Scan targets from a file
--iR	nmap -iR num_host	Scan random host (num_host for how many)
---exclude	nmap --exclude excluded_host	Exclude hosts
- ```
+nmap xx.xx.xx.xx
+```
+
+> Multiple IPs
+
+```
+ nmap xx.xx.xx.xx xx.xx.xx.xx ...
+```
+
+> Scan with a range
+
+```
+ nmap xx.xx.xx.xx-xx
+```
+
+> Scan with CIDR
+
+```
+ nmap xx.xx.xx.xx/xx
+```
+
+> Scan a domain
+
+```
+ nmap justanothernode.com
+```
+
+> Scan targets from a file\
+> -iL	
+
+```
+nmap -iL ip_list_file.txt	
+```
+
+> Scan random host (num_host for how many)\
+> -iR	
+
+```
+nmap -iR num_host	
+```
+
+> Exclude hosts\
+> --exclude	
+
+```
+nmap --exclude excluded_host	
+```
+
 
 ## Nmap Port Specification
+
+> port scan for a single port, a range, UDP/TCP specification, and service names\
+> -p	
+
 ```
--p	nmap -p port,port-port,U:53,T20-22,http,https target_host	port scan for a single port, a range, UDP/TCP specification, and service names
--p-	nmap -p- target_host	port scan all ports
--F	nmap -F target_host	fast port scan (scan 100 ports)
+nmap -p port,port-port,U:53,T20-22,http,https target_host	
 ```
+
+> port scan all ports\
+> -p-	
+
+```
+nmap -p- target_host	
+```
+
+> fast port scan (scan 100 ports)\
+> -F	
+
+```
+nmap -F target_host
+```
+
 ## Nmap OS and Version Detection
+
+> Remote OS detection using TCP/IP fingerprinting\
+> -O	
+
 ```
--O	nmap -O target_host	Remote OS detection using TCP/IP fingerprinting
--O --osscan-limit	nmap -O --oscan-limit target_host	If can not find one open and closed port, will not try
--O --osscan-guess	nmap -O --oscan-guess target_host	Makes Nmap guess more aggressively
--O --max-os-tries	nmap -O --max-os-tries num	Set max tries for OS detection
--sV	nmap -sV target_host		Determine version of the services running on ports
--sV --version-intensity	nmap -sV --version-intensity 0-9 target_host	Intensity level of guessing services
--sV --version-light	nmap -sV --version-light target_host	Lowest possible guessing for services (Faster)
--sV --version-all	nmao -sV --version-all target_host	Highest possible guessing for services (most correct)
--A	nmap -A target_host	OS detection, version detection, script scanning, and traceroute
+nmap -O target_host	
 ```
+
+> If can not find one open and closed port, will not try\
+> -O --osscan-limit	
+
+```
+nmap -O --oscan-limit target_host	
+```
+
+> Makes Nmap guess more aggressively\
+> -O --osscan-guess	
+
+```
+nmap -O --oscan-guess target_host	
+```
+
+> Set max tries for OS detection\ 
+> -O --max-os-tries	
+
+```
+nmap -O --max-os-tries num	
+```
+
+> Determine version of the services running on ports\
+> -sV	
+
+```
+nmap -sV target_host		
+```
+
+> Intensity level of guessing services\
+> -sV --version-intensity	
+
+```
+nmap -sV --version-intensity 0-9 target_host	
+```
+
+> Lowest possible guessing for services (Faster)\
+> -sV --version-light	
+
+```
+nmap -sV --version-light target_host	
+```
+
+> Highest possible guessing for services (most correct)\
+> -sV --version-all	
+
+```
+nmap -sV --version-all target_host
+```
+
+> OS detection, version detection, script scanning, and traceroute\
+> -A
+
+```
+nmap -A target_host	
+```
+
 ## Nmap Timing
+
+> Paranoid (0) Intrusion Detection System evasion\
+> -T0 
+
 ```
--T0	nmap -T0 target_host	Paranoid (0) Intrusion Detection System evasion
--T1	nmap -T1 target_host	Sneaky (1) Intrusion Detection System evasion
--T2	nmap -T2 target_host	Polite (2) slows down the scan to use less bandwidth and use less target machine resources
--T3	nmap -T3 target_host	Normal (3) which is default speed
--T4	nmap -T4 target_host	Aggressive (4) speeds scans; assumes you are on a reasonably fast and reliable network
--T5	nmap -T5 target_host	Insane (5) speeds scan; assumes you are on an extraordinarily fast network
+nmap -T0 target_host	
 ```
+> Sneaky (1) Intrusion Detection System evasion\
+> -T1
+
+```
+nmap -T1 target_host	
+```
+> Polite (2) slows down the scan to use less bandwidth and use less target machine resources\
+> -T2 
+
+```
+nmap -T2 target_host	
+```
+
+> Normal (3) which is default speed\
+> -T3	
+
+```
+nmap -T3 target_host	
+```
+
+> Aggressive (4) speeds scans; assumes you are on a reasonably fast and reliable network\
+> -T4	
+
+```
+nmap -T4 target_host	
+```
+
+> Insane (5) speeds scan; assumes you are on an extraordinarily fast network\
+> -T5	
+
+```
+nmap -T5 target_host
+```
+
 #### Nmap Timing Flags
+
+> Give up on target after this long\
+> --host-timeout time	
+
 ```
---host-timeout time	Give up on target after this long
---min-rtt-timeout/max-rtt-timeout/initial-rtt-timeout time	Specifies probe round trip time
---min-hostgroup/max-hostgroup size	Parallel host scan group sizes
---min-parallelism/max-parallelism <numprobes>	Probe parallelization
---max-retires tries	Specify the maximum number of port scan probe retransmissions
---min-rate num	Send packets no slower than num per second
---max-rate num	Send packets no faster than num per second
+nmap --host-timeout time target host
+```
+
+> Specifies probe round trip time\
+> --min-rtt-timeout/max-rtt-timeout/initial-rtt-timeout time	
+
+```
+nmap --mim-rtt-timeout time target_host
+```
+```
+nmap --max-rtt-timeout time target_host
+```
+```
+nmap --initial-rtt-timeout time target_host
+```
+
+> Parallel host scan group sizes\
+> --min-hostgroup/max-hostgroup size
+
+```
+nmap --min-hostgroup size target_host
+```
+```
+nmap --max-hostgroup size target_host
+```
+
+> Probe parallelization\
+> --min-parallelism/max-parallelism num
+
+```
+nmap --min-parallelism num target_host	
+```
+```
+nmap --max-parallelism num target_host
+```
+
+> Specify the maximum number of port scan probe retransmissions\
+> --max-retires tries	
+
+```
+nmap --max-retires tries target_host
+```
+
+> Send packets no slower than num per second\
+> --min-rate num	
+
+```
+nmap --min-rate num target_host
+```
+
+> Send packets no faster than num per second\
+> --max-rate num	
+
+```
+nmap --max-rate num target_host
 ```
 
 ## Firewall/IDS Evasion and Spoofing
+
+> Fragmented IP packets (Harder for packets to be filtered)\
+> -f	
+
 ```
--f	nmap -f target_host	Fragmented IP packets (Harder for packets to be filtered)
---mtu	nmap --mtu num target_host	Set the mtu
--D	nmap -D decoy-ip1,decoy-ip2,your-own-ip,decoy-ip3,decoy-ip4 remote-host-ip	Send scnas from spoofed IPs with your legit IP
--S	nmap -S source_host target_host	Spoof source IP address
--g	nmap -g port target_host	Set source port number
---data	nmap --data hex_string target_host	include binary data as payload to the packets
---data-string	nmap --data-string string target_host	include string stat as payload to the packets
---data-length	nmap –data-length num target_host	Appends random data to sent packets
---ip-option	nmap --ip-option hex_string target_host	Send packets with specified ip options
---ttl	nmap --ttl num target_host	Set time to live
---spoof-mac	nmap --spoof-mac mac_addr,prefix,vendor target_host	Spoof MAC address
---randomize-hosts	nmap --randomize-hosts target_host	Randomize target host order
---badsum	nmap --badsum target_host	Send packets with bogus checksums (can bypass some firewalls/IDS because assume dropping the packet)
---proxies	nmap --proxies URL/IP	Relay connections through HTTP/SOCKS4 proxies
+nmap -f target_host	
 ```
+
+> Set the mtu\
+> --mtu	
+
+```
+nmap --mtu num target_host	
+```
+
+> Send scans from spoofed IPs with your legit IP\
+> -D	
+
+```
+nmap -D decoy-ip1,decoy-ip2,your-own-ip,decoy-ip3,decoy-ip4 remote-host-ip	
+```
+
+> Spoof source IP address\
+> -S	
+
+```
+nmap -S source_host target_host	
+```
+
+> Set source port number\
+> -g	
+
+```
+nmap -g port target_host	
+```
+
+> include binary data as payload to the packets\
+> --data	
+
+```
+nmap --data hex_string target_host	
+```
+
+> include string stat as payload to the packets\
+> --data-string	
+
+```
+nmap --data-string string target_host	
+```
+
+> Appends random data to sent packets\
+> --data-length	
+
+```
+nmap –data-length num target_host	
+```
+
+> Send packets with specified ip options\
+> --ip-option	
+
+```
+nmap --ip-option hex_string target_host	
+```
+
+> Set time to live\
+> --ttl	
+
+```
+nmap --ttl num target_host	
+```
+
+> Spoof MAC address\
+> --spoof-mac	
+
+```
+nmap --spoof-mac mac_addr,prefix,vendor target_host	
+```
+
+> Randomize target host order\
+> --randomize-hosts	
+
+```
+nmap --randomize-hosts target_host	
+```
+
+> Send packets with bogus checksums (can bypass some firewalls/IDS because assume dropping the packet)\
+> --badsum	
+
+```
+nmap --badsum target_host	
+```
+
+> Relay connections through HTTP/SOCKS4 proxies\
+> --proxies	
+
+```
+nmap --proxies URL/IP	
+```
+
 ## Nmap output
 ```
 -oN	nmap -oN file.txt target_host	Normal nmap output to file
