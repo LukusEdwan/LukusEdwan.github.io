@@ -40,21 +40,21 @@ nmap -sU target_host
 nmap -sA target_host	
 ```
 
-> TCP Window port scan (TCP ACK scan that take advantage of RST return) ^1\
+> TCP Window port scan (TCP ACK scan that take advantage of RST return) <sup>1</sup>\
 > -sW	
 
 ```
 nmap -sW target_host	
 ```
 
-> TCP Maimon port scan (Scan invented Uriel Maimon) ^2\
+> TCP Maimon port scan (Scan invented Uriel Maimon) <sup>2</sup>\
 > -sM	
 
 ```
 nmap -sM target_host	
 ```
 
-> TCP Idle Scan (Antirez's bind port scan) ^3\
+> TCP Idle Scan (Antirez's bind port scan) <sup>3</sup>\
 > -sI	
 
 ```
@@ -89,7 +89,7 @@ nmap -sF target_host
 nmap -sX target_host	
 ```
 
-> SCTP INIT ping scan (Use new layer 4 SCTP protocol) ^4\
+> SCTP INIT ping scan (Use new layer 4 SCTP protocol) <sup>4</sup>\
 > -sY	
 
 ```
@@ -102,7 +102,7 @@ nmap -sY target_host
 ```
 nmap --scanflags  FLAG	
 ```
-1: RST is returned. It does this by examining the TCP Window value of the RST packets returned: 
+<sup>1</sup> RST is returned. It does this by examining the TCP Window value of the RST packets returned: 
 
 | Description                                                 | Status          |
 |:------------------------------------------------------------|:----------------| 
@@ -113,11 +113,11 @@ nmap --scanflags  FLAG
 
 [source](https://nmap.org/book/scan-methods-window-scan.html)
 
-2: Uriel Maimon described the technique in Phrack Magazine issue #49 (November 1996). This technique is exactly the same as NULL, FIN, and Xmas scan, except that the probe is FIN/ACK. System should report if a port is open of close as stated in RPC 793 but Uriel noticed that many BSD systems drop the packet. While this option was quite useful in 1996, modern systems rarely exhibit this bug. They send a RST back for all ports, making every port appear closed.[source](https://nmap.org/book/scan-methods-maimon-scan.html) 
+<sup>2</sup> Uriel Maimon described the technique in Phrack Magazine issue #49 (November 1996). This technique is exactly the same as NULL, FIN, and Xmas scan, except that the probe is FIN/ACK. System should report if a port is open of close as stated in RPC 793 but Uriel noticed that many BSD systems drop the packet. While this option was quite useful in 1996, modern systems rarely exhibit this bug. They send a RST back for all ports, making every port appear closed.[source](https://nmap.org/book/scan-methods-maimon-scan.html) 
 
-3: Antirez's idle scan, aka bind port scan, can actually scan a target without sending a single packet to the target from their own IP address. A clever side-channel attack allows for the scan to be bounced off a dumb “zombie host”. This means any IDS will report the zombie host as the attacker instead of the host scanning the network. See URL for more info: https://nmap.org/book/idlescan.html [source](https://nmap.org/book/idlescan.html)
+<sup>3</sup> Antirez's idle scan, aka bind port scan, can actually scan a target without sending a single packet to the target from their own IP address. A clever side-channel attack allows for the scan to be bounced off a dumb “zombie host”. This means any IDS will report the zombie host as the attacker instead of the host scanning the network. See URL for more info: https://nmap.org/book/idlescan.html [source](https://nmap.org/book/idlescan.html)
 
-4: Stream Control Transmission Protocol (SCTP) is a protocol that was designed for streaming services and other services that need real time communication. This also adds new features like multi-homing and multi-streaming compared to TCP and UDP. The INIT packet is similar to SYN TCP packet. See RFC for more information on this protocol [source](https://www.rfc-editor.org/rfc/rfc4960.txt)
+<sup>4</sup> Stream Control Transmission Protocol (SCTP) is a protocol that was designed for streaming services and other services that need real time communication. This also adds new features like multi-homing and multi-streaming compared to TCP and UDP. The INIT packet is similar to SYN TCP packet. See RFC for more information on this protocol [source](https://www.rfc-editor.org/rfc/rfc4960.txt)
 
 ## Network Discovery options
 
@@ -531,321 +531,608 @@ nmap --proxies URL/IP
 ```
 
 ## Nmap output
+
+> Normal nmap output to file\
+> -oN	
+
 ```
--oN	nmap -oN file.txt target_host	Normal nmap output to file
--oX	nmap -oX file.xml target_host	nmap output in XML format to file
--oG	nmap -oG file.gp target_host	nmap output in grepable format to file
--oG -	nmap target_host -oG-	nmap output to grepable to screen for piping (also -oN- and -oX- are allowed)
---append-output	nmap -oN file.txt --append-output target_host	Append a scan to a file
--v	nmap -vvvv target_host	Increase the verbosity level
--d	nmap -dddd target_host	Increase the debugging level
---reason	nmap --reason target_host	Display the reason for a port state
---open	nmap --open target_host	Show all possible open ports only
---packet-trace	nmap --packet-trace target_host	Show all packets sent and received
---iflist	nmap --iflist target_host	Show the host interface and routes
---resume	nmap --resume target file.txt	Resume a scan that had a output file
+nmap -oN file.txt target_host	
 ```
+
+> nmap output in XML format to file\
+> -oX	
+
+```
+nmap -oX file.xml target_host	
+```
+
+> nmap output in grepable format to file\
+> -oG	
+```
+nmap -oG file.gp target_host	
+```
+
+> nmap output to grepable to screen for piping (also -oN- and -oX- are allowed)\
+> -oG -	
+
+```
+nmap target_host -oG-	
+```
+
+> Append a scan to a file\
+> --append-output	
+
+```
+nmap -oN file.txt --append-output target_host	
+```
+
+> Increase the verbosity level\
+> -v	
+
+```
+nmap -vvvv target_host	
+```
+
+> Increase the debugging level\
+> -d	
+
+```
+nmap -dddd target_host	
+```
+
+> Display the reason for a port state\
+> --reason	
+
+```
+nmap --reason target_host	
+```
+
+> Show all possible open ports only\
+> --open	
+
+```
+nmap --open target_host	
+```
+
+> Show all packets sent and received\
+> --packet-trace	
+
+```
+nmap --packet-trace target_host	
+```
+
+> Show the host interface and routes\
+> --iflist	
+
+```
+nmap --iflist target_host	
+```
+
+> Resume a scan that had a output file\
+> --resume	
+
+```
+nmap --resume target file.txt	
+```
+
 ## Nmap NSE Scripts
+
+> Scan with default NSE "safe" scripts (also can use --script default)\ 
+> -sC	
+
 ```
--sC	nmap -sC target_host	Scan with default NSE "safe" scripts (also can use --script default)
---script	nmap --script=name_of_script target_host	Use single script, use wildcard * or comma for multiple
---script "not intrusive"	nmap --script "not intrusive" target_host	Same as default scripts but removed "intrusive" scripts
---script-args	nmap --script script_here --script-args scriptArgs=arg target_host	NSE script with arguments
---script-help 	nmap --script-help script_name	Get the arguments
-/usr/share/nmap/scripts/	Unix system default location for script (on most systems)
+nmap -sC target_host	
 ```
+
+> Use single script, use wildcard * or comma for multiple\
+> --script	
+
+```
+nmap --script=name_of_script target_host	
+```
+
+> Same as default scripts but removed "intrusive" scripts\
+> --script "not intrusive"	
+
+```
+nmap --script "not intrusive" target_host	
+```
+
+> NSE script with arguments\
+> --script-args	
+
+```
+nmap --script script_here --script-args scriptArgs=arg target_host	
+```
+
+> Get the arguments\
+> --script-help 	
+
+```
+nmap --script-help script_name	
+```
+
+> Unix system default location for script (on most systems):\
+> /usr/share/nmap/scripts/
+
 ## Nmap IPv6
-```
--6	nmap -6 target_host	scan with for IPv6 addresses
-nmap --script=ipv6-multicast-mld-list	scan IPv6 multicast addresses
-```
-### Layer 2 Network Discovery Scans (ARP ping scan)
-```
- nmap -n -sn -PR --packet-trace --send-eth
 
- nmap -n -sn -PR --packet-trace --send-eth target_host -oG - | grep -o '^[^#]*' | cut -d ':' -f 2 | cut -d ' ' -f -2 | tr -d ' ' | sort -u > arp_discovery_scan.txt
-```
-### Layer 3 Network Discovery Scans (ICMP ping scan)
-```
- nmap -n -sn --send-ip
+> scan with for IPv6 addresses\
+> -6	
 
- nmap -n -sn --send-ip target_host -oG - | grep -o '^[^#]*' | cut -d ':' -f 2 | cut -d ' ' -f -2 | tr -d ' ' sort -u > icmp_discovery_scan.txt
 ```
-### Layer 4 Network Discovery Scans (UDP,TCP Syn, TCP ACK port scan)
+nmap -6 target_host	
 ```
- nmap -n -Pn --host-timeout 2 -PU53,514
- nmap -n -Pn --host-timeout 2 -PS21-1023,3389,5985
- nmap -n -Pn --host-timeout 2 -PA21-1023,3389,5985
 
+> scan IPv6 multicast addresses
+
+```
+nmap --script=ipv6-multicast-mld-list	
+```
+
+
+## Layer 2 Network Discovery Scans (ARP ping scan)
+ 
+```
+nmap -n -sn -PR --packet-trace --send-eth
+```
+> Layer 2 Network Discovery Scan Output to a File
+
+```
+nmap -n -sn -PR --packet-trace --send-eth target_host -oG - | grep -o '^[^#]*' | cut -d ':' -f 2 | cut -d ' ' -f -2 | tr -d ' ' | sort -u > arp_discovery_scan.txt
+```
+
+
+## Layer 3 Network Discovery Scans (ICMP ping scan)
+
+```
+nmap -n -sn --send-ip
+```
+> Layer 3 Network Discovery Scan Output to a File
+
+```
+nmap -n -sn --send-ip target_host -oG - | grep -o '^[^#]*' | cut -d ':' -f 2 | cut -d ' ' -f -2 | tr -d ' ' sort -u > icmp_discovery_scan.txt
+```
+
+
+## Layer 4 Network Discovery Scans (UDP,TCP Syn, TCP ACK port scan)
+
+> UDP Layer 4 Network Discovery Scan
+
+```
+nmap -n -Pn --host-timeout 2 -PU53,514
+```
+
+> TCP Syn Layer 4 Network Discovery Scan
+
+```
+nmap -n -Pn --host-timeout 2 -PS21-1023,3389,5985
+```
+
+> ACK Layer 4 Network Discovery Scan
+
+```
+nmap -n -Pn --host-timeout 2 -PA21-1023,3389,5985
+```
+
+> UDP Layer 4 Network Discovery Scan Output to a File
+
+```
  nmap -n -Pn --host-timeout 2 -PU53,514 target_host  -oG - | grep -o '^[^#]*' | cut -d ':' -f 2 | cut -d ' ' -f -2 | tr -d ' ' | sort -u  > udp_discovery_scan.txt
- nmap -n -Pn --host-timeout 2 -PS21-1023,3389,5985 target_host -oG - | grep -o '^[^#]*' | cut -d ':' -f 2 | cut -d ' ' -f -2 | tr -d ' ' | sort -u  > tcpack_discovery_scan.txt
- nmap -n -Pn --host-timeout 2 -PS21-1023,3389,5985 target_host  -oG - | grep -o '^[^#]*' | cut -d ':' -f 2 | cut -d ' ' -f -2 | tr -d ' ' | sort -u  > tcpsyn_discovery_scan.txt
 ```
-### Get Geoip info with http://www.geoplugin.com/
-`nmap --traceroute --script traceroute-geolocation target_host`
 
-### Traceroute geoip info with www.geoplugin.net (can output in kml file format)
+> TCP Syn Layer 4 Network Discovery Scan Output to a File
+
+```
+nmap -n -Pn --host-timeout 2 -PS21-1023,3389,5985 target_host -oG - | grep -o '^[^#]*' | cut -d ':' -f 2 | cut -d ' ' -f -2 | tr -d ' ' | sort -u  > tcpack_discovery_scan.txt
+```
+
+> ACK Layer 4 Network Discovery Scan Output to a File
+
+```
+nmap -n -Pn --host-timeout 2 -PS21-1023,3389,5985 target_host  -oG - | grep -o '^[^#]*' | cut -d ':' -f 2 | cut -d ' ' -f -2 | tr -d ' ' | sort -u  > tcpsyn_discovery_scan.txt
+```
+
+### Get Geoip Info With Script 
+
+> Script traceroute-geolocation uses website [http://www.geoplugin.com/](http://www.geoplugin.com/)
+
 ```
 nmap --traceroute --script traceroute-geolocation target_host
+```
+
+> Geoip script with output in kml file format
+
+```
 nmap --traceroute --script traceroute-geolocation --script-args traceroute-geolocation.kmlfile=traceroute_map.kml target_host
 ```
 
-#### View kml file at https://www.gpsvisualizer.com/
+> View kml file at [https://www.gpsvisualizer.com/]( https://www.gpsvisualizer.com/)
 
-### whois lookup (disable thrid party whois db, disable cache)
+
+### Whois Lookup With Script
 ```
- nmap -sn --script whois-* target_host
- nmap --script whois-ip --script-args whois.whodb=nofollow
- nmap -sn --script whois-ip --script-args whois.whodb=nocache
+nmap -sn --script whois-* target_host
 ```
-### shodan lookup (get the api key from https://developer.shodan.io/ ) (can output to cvs)
+
+> Disable thrid party whois db
+
 ```
- nmap -sn -Pn -n --script shodan-api --script-args shodan-api.apikey=shodan_api_key target_host
- nmap -sn -Pn -n --script shodan-api --script-args shodan-api.apikey='shodan_api_key',shodan-api.outfile=results.csv
+nmap --script whois-ip --script-args whois.whodb=nofollow
 ```
-### google safe browsing check (get the api key from https://developers.google.com/safe-browsing/?csw=1)
+
+> Disable cache
+
+```
+nmap -sn --script whois-ip --script-args whois.whodb=nocache
+```
+
+### Shodan Lookup 
+
+> Shodan is a powerful search engine for external network exploration
+> Get the api key from [https://developer.shodan.io/](https://developer.shodan.io/)
+
+```
+nmap -sn -Pn -n --script shodan-api --script-args shodan-api.apikey=shodan_api_key target_host
+```
+
+> Output Shodan search to a cvs file
+
+```
+ nmap -sn -Pn -n --script shodan-api --script-args shodan-api.apikey='shodan_api_key',shodan-api.outfile=shodan_results.csv
+```
+
+### Google Safe Browsing Check 
+
+> Google safe Browsing check is a service to idenify unsafe websites
+> This script checks if hosts are on Google's blacklist suspected malware and phishing servers
+> Get the api key from [https://developers.google.com/safe-browsing/?csw=1](https://developers.google.com/safe-browsing?csw=1)
+
 ```
  nmap -p 80 --script http-google-malware --script-args http-google-malware.api=google_api_key target_host
 ```
-### Enumerate website for email, usernames, etc (use match args for custom grep matches)
+
+### Enumerate Website For Email, Usernames, etc 
 ```
  nmap -p 80,443 --script http-grep target_host
- nmap -p 80 <target> --script http-grep --script-args='match=""'
 ```
-### Find host that are running web servers
+
+> Use match args for custom grep matches
+
+```
+nmap -p 80 <target> --script http-grep --script-args='match=""'
+```
+
+### Find Host That Are Running Web Servers
 ```
  nmap -p 80,443 -sV -oG – target_host | grep open
 ```
-### Find hostnames that point to an IP/another hostname
+### Find Hostnames That Point To An IP/Another Hostname
 ```
  nmap -sn --script hostmap-* target_host
  ```
-### Brute force subdomain records (add your own customer wordlist, change the threads being used)
+### Brute Force Subdomain Records 
 ```
- nmap --script dns-brute target_host
- nmap --script dns-brute --script-args dns-brute.hostlist=wordslist.txt target_host
+nmap --script dns-brute target_host
+```
+
+> Add your own customer wordlist
+
+```
+nmap --script dns-brute --script-args dns-brute.hostlist=wordslist.txt target_host
+```
+
+> Change the threads being used
+
+```
  nmap --script dns-brute --script-args dns-brute.threads=num target_host
 ```
-### google's people api to query gmail info (need a valid gmail account to query gmail accounts)
-#### THIS USES AN EXTERNAL SCRIPT at https://raw.githubusercontent.com/cldrn/nmap-nse-scripts/master/scripts/google-people-enum.nse
+
+### Google's People API To Query Gmail Info 
+> Need a valid gmail account to query gmail accounts
+> THIS USES AN EXTERNAL SCRIPT at [https://raw.githubusercontent.com/cldrn/nmap-nse-scripts/master/scripts/google-people-enum.nse](https://raw.githubusercontent.com/cldrn/nmap-nse-scripts/master/scripts/google-people-enum.nse)
+
+
 ```
  nmap -sn --script google-people-enum --script-args='username=your_username,password=your_password,userdb=target_users.txt' target_domain
 ```
-### vulners to query services for vulnerablities from https://vulners.com/api/v3/burp/software/ (set a min cvss score to report)
+
+### Vulners To Query Services For Vulnerablities 
+> Uses [vulners](https://vulners.com/api/v3/burp/software/), vulnerablity DB aggregate, to find vulnerable services basic on the enumeration info the -sV flag gives it
+> The more aggressive the service scan, the bettter the results
+
 ```
 nmap -sV --script vulners target_host
+```
+
+> Set a min cvss score to report
+
+```
 nmap -sV --script vulners --script-args mincvss=0-10 target_host
 ```
-### vulscan to query services for vulnerablities db MITRE CVE, Exploit-Db, scip VulDB (download the db, test against target)
-#### THIS USES AN EXTERNAL SCRIPT at https://github.com/cldrn/nmap-nse-scripts/blob/master/scripts/vulscan.nse
+### Vulscan To Query Services For Vulnerablities DB MITRE CVE, Exploit-Db, scip VulDB 
+> THIS USES AN EXTERNAL SCRIPT at [https://github.com/cldrn/nmap-nse-scripts/blob/master/scripts/vulscan.nse](https://github.com/cldrn/nmap-nse-scripts/blob/master/scripts/vulscan.nse])
+> Compared to the Vulners scan this scan give less reliable results but can be preformed without needing to contact external servers if the DB is downloaded before hand
+
+> Download the DB
+
 ```
  nmap -sV --script vulscan --script-args vulscan.updatedb LOCALHOST 
+```
+
+> Run the vulnerablity scan agenist a target
+
+```
  nmap -sV --script vulscan target_host
 ```
-### List supported HTTP methods
+### Find DCs
+> Find the AD LDAP
+
+```
+nmap -sS -sV -p 389 target_host
+```
+
+> Find master netbios
+
+```
+nmap -sn --script broadcast-netbios-master-browser
+```
+
+> Find the DNS on the network
+
+```
+ nmap -R -sn --packet-trace -Pn google.com
+```
+
+#### List supported HTTP methods
 ```
  nmap -p 80,443 --script http-methods --script-args httpmethods.test-all=true target_host
 ``` 
-### List available paths and folders
+#### List available paths and folders
 ```
  nmap --script http-enum -sV target_host
 ``` 
-### Scanning web servers for XSS vulnerabilities
+#### Scanning web servers for XSS vulnerabilities
 ```
  nmap -sV --script http-unsafe-output-escaping target_host
 ``` 
-### Scanning web servers for SQL injection
+#### Scanning web servers for SQL injection
 ```
  nmap -sV --script http-sql-injection target_host
 ``` 
-### Scanning web servers for XST vulnerabilities 
+#### Scanning web servers for XST vulnerabilities 
 ```
  nmap -sV --script http-methods,http-trace --script-args http-methods.retest target_host
 ``` 
-### Find WAF
+#### Find WAF
 ```
  nmap -sV --script http-waf-detect,http-waf-fingerprint target_host
 ```
-### Brute-forcing HTTP basic auth
+#### Brute-forcing HTTP basic auth
 ```
  nmap -p 80 --script http-brute target_host
 ```
-### Wordpress bruteforce common password
+#### Wordpress bruteforce common password
 ```
  nmap -sV --script http-wordpress-brute target_host
 ```
-### Finding web servers for default creds
+#### Finding web servers for default creds
 ```
  nmap -sV --script http-default-accounts target_host
 ``` 
-### Finding expossed Git repos
+#### Finding expossed Git repos
 ```
  nmap -sV --script http-git target_host
  ```
-### Brute force SMTP
+#### Brute force SMTP
 ```
  nmap -p 25 --script smtp-brute target_host
  ```
-### Brute force IMAP
+#### Brute force IMAP
 ```
  nmap -p 143 --script imap-brute target_host
  ```
-### Brute force POP3
+#### Brute force POP3
 ```
  nmap -p 110 --script pop3-brute target_host
 ``` 
-### Enumerate users
+#### Enumerate users
 ```
  nmap -p 25 --script-smtp-enum-users target_host
  ```
-### SMTP running on alternate ports
+#### SMTP running on alternate ports
 ```
  nmap -sV --script strangeport target_host
  ```
-### Discovering open relays
+#### Discovering open relays
 ```
  nmap -sV --script smtp-open-relay -v target_host
 ``` 
-### Get available SMTP commands
+#### Get available SMTP commands
 ```
  nmap -p 25 --script=smtp-commands target_host
 ``` 
-### SSH enumerate algorithms
+#### SSH enumerate algorithms
 ```
  nmap -p 22 --script=ssh2-enum-algos target_host
 ``` 
-### SSH enumerate hostkeys
+#### SSH enumerate hostkeys
 ```
  nmap -p 22 --script=ssh-hostkey target_host
 ``` 
-### SSH enumerate with public keys 
+#### SSH enumerate with public keys 
 ```
- nmap -p 22 --script ssh-publickey-acceptance --script-args 'ssh.usernames={"root", "user"}, publickeys={"./id_rsa1.pub", "./id_rsa2.pub"}' target_host
+ nmap -p 22 --script ssh-publickey-acceptance --script-args 'ssh.usernames={"root", "user"}, publickeys={"./id_your_rsa.pub", "./id_your_ed25519.pub"}' target_host
 ```
-### SSH brute force (default password list is used if none are supplied)
+#### SSH brute force 
+
+> Default password list is used if none are supplied
+
 ```
  nmap -p 22 --script ssh-brute --script-args userdb=users.lst,passdb=pass.lst,ssh-brute.timeout=4s target_host
 ```
-### SSL get cert
+#### SSL get cert
 ```
  nmap -p 443 --script=ssl-cert target_host
 ``` 
-### SSL run all ssl scripts
+#### SSL run all ssl scripts
 ```
  nmap -p 443 --script=ssl-* target_host
 ```
-### SSL heatbleed
+#### SSL heatbleed
 ```
  nmap -p 443 --script ssl-heartbleed target_host
 ``` 
-### Get MS SQL info
+#### Get MS SQL info
 ```
  nmap -sS -p 1433 --script ms-sql-info target_host
+```
+
+> Change the default MS SQL port
+
+```
  nmap -sS -p 1433 --script ms-sql-info --script-args mssql.instance-port=1433 target_host
 ``` 
-### Brute force MS SQL passwords
+#### Brute force MS SQL passwords
+
 ```
  nmap -sT -p 1433 --script ms-sql-brute --script-args mssql.instance-all,userdb=customuser.txt,passdb=custompass.txt target_host
+```
+
+```
  nmap -sT -p 1433 --script ms-sql-brute --script-args userdb=customuser.txt,passdb=custompass.txt target_host
 ``` 
-### Dump MS SQL password hashes (check for creds with ms-sql-empty-password)
+#### Dump MS SQL password hashes 
+> Check for creds with ms-sql-empty-password
+
 ```
  nmap -sT -p 1433 --script ms-sql-empty-password,ms-sql-dump-hashes target_host
 ``` 
-### MySQL list databases (default port 3306) (if no username and password is supplied then will try to brute force)
+#### MySQL list databases 
+> Default port 3306
+> If no username and password is supplied then will try to brute force
+
 ```
  nmap -sT -p 3306 --script mysql-databases target_host
+```
+
+```
  nmap -sT -p 3306 --script mysql-databases --script-args mysqluser=mysql_username,mysqlpass=mysql_pass target_host
 ```
-### Brute force MySQL password (only uses nmap default password list)
+#### Brute force MySQL password
+> Only uses nmap default password list
+
 ```
  nmap -sT -p 3306 --script mysql-brute  target_host
 ``` 
-### MySQL enumerate with empty password for default
+#### MySQL enumerate with empty password for default
 ```
  nmap -sT -p 3306 --script mysql-empty-password target_host
 ``` 
-### Oracle stealth brute force
+#### Oracle stealth brute force
 ```
  nmap -sT --script oracle-brute-stealth -p 1521 --script-args oracle-brute-stealth.sid=ORCL target_host
 ``` 
-### Get MongoDB info
+#### Get MongoDB info
 ```
  nmap -sS -p 27017 --script mongodb-info target_host
 ``` 
-### Get Cassandra info
+#### Get Cassandra info
 ```
- nmap -sS -p 9160 --script cassandra-info
+ nmap -sS -p 9160 --script cassandra-info target_host
  ```
-### Find standard open ports for ICS/SCADA systems
+#### Find standard open ports for ICS/SCADA systems
 ```
  nmap -Pn -sT --scan-delay 1s --max-parallelism 1 -p 80,102,443,502,1089,1091,2222,4000,4840,20000,34962,34964,34980,44818,47808,55000,55003 target_host
 ```
-### Find control system ports (BACnet/IP)
+#### Find control system ports (BACnet/IP)
 ```
  nmap -Pn -sU -p 47808 --script bacnet-info target_host
 ``` 
-### Find control system ports (ethernet/IP)
+#### Find control system ports (ethernet/IP)
 ```
  nmap -Pn -sU -p 44818 --script enip-info target_host
 ``` 
-### Find SCADA Modbus device
+#### Find SCADA Modbus device
 ```
- nmap -Pn -sT -p 502 --script modbus-discover target_host
+ nmap -Pn -sT -p 502 --script modbus-discover --script-args aggressive=true target_host
 ``` 
-### Find SCADA Niagara Fox device
+#### Find SCADA Niagara Fox device
 ```
  nmap -Pn -sT -p 1911,4911 --script fox-info target_host
 ``` 
-### Find SCADA PCWorx device
+#### Find SCADA PCWorx device
 ```
  nmap -Pn -sT -p 1962 --script pcworx-info target_host
 ```
-### SMB vulns scan (all nmap SMB vulnerability scripts)
+#### SMB vulns scan
+> Use all nmap SMB vulnerability scripts
+
 ```
  nmap -sS -p 139,445 -script smb-vuln* --script-args=unsafe=1 target_host
 ```
-### SMB MS08-067 ( metasploit for unpatched systems and ECLIPSEDWING for patched systems)
+#### SMB MS08-067
+> Use metasploit for unpatched systems and ECLIPSEDWING for patched systems
+
 ```
  nmap -sS -p 139,445 --script smb-vuln-ms08-067 target_host
 ```
-### SMB getting windows information (only works with SMBv1)
+#### SMB getting windows information 
+> Only works with SMBv1
+
 ```
  nmap -sS -p 139,445 --script smb-os-discovery target_host
 ```
-## SMB finding windows client with SMB signing disable
+#### SMB finding windows client with SMB signing disable
 ```
  nmap -sU -sS -p U:137,T:139,T:445 --script smb-security-mode target_host
 ```
-### SMB check if UDP is being used (bypass filtering)
+#### SMB check if UDP is being used (bypass filtering)
 ```
  nmap -sU -p 137 --script smb-security-mode target_host
 ```
-### IIS showing windows 8.3 file naming scheme info
+#### IIS showing windows 8.3 file naming scheme info
 ```
  nmap -p 80 --script http-iis-short-name-brute target_host
 ```
-### NetBIOS info
+#### NetBIOS info
 ```
  nmap -v -sU -p 137 --script nbstat target_host
 ```
-### SMB enumeration (Old 2000 allow without login) (SAMR enumeration and LSA bruteforcing)
-```
- nmap -v -sU -sS -p U:137,T:139,T:445 --script smb-enum-users target_host
-```
-#### Use --script-args lsaonly=true or samronly=true if only one method is desired
+#### SMB enumeration 
+> Old Windows 2000 servers allow without login
 
-### Share folders enumeration
+> SAMR enumeration and LSA bruteforcing
+
 ```
- nmap -sS -sU -p U:137,T:139,T:445 --script smb-enum-shares --script-args smbusername=Administrator,smbpassword=Password target_host
+nmap -v -sU -sS -p U:137,T:139,T:445 --script smb-enum-users target_host
 ```
-### Find DCs (Find the AD LDAP, Find master netbios, and Find the DNS on the network)
+
+> Use lSA Only\
+> More accounts info is return like system accounts, user accounts, groups, and aliases\
+> LSA uses at least 10 packets while SAMR uses half\
+> The LSA enumeration will create many Windows event log
+
+
 ```
- nmap -sS -sV -p 389 target_host
- nmap -sn --script broadcast-netbios-master-browser
- nmap -R -sn --packet-trace -Pn google.com
+nmap -v -sU -sS -p U:137,T:139,T:445 --script smb-enum-users --script-args lsaonly=true
+target_host
 ```
-### Send wake on lan (wol) packet
+
+> Use SAMR Only\
+> Only user accounts are returned but only requires one packet for each user account making less noise on a network 
+
 ```
- nmap --script broadcast-wake-on-lan --script-args broadcast-wake-on-lan.MAC='00:00:00:00:00:00'
- ```
+nmap -v -sU -sS -p U:137,T:139,T:445 --script smb-enum-users --script-args samronly=true target_host
+```
+
+#### Share folders enumeration
+> Need username and password with permission
+
+```
+nmap -sS -sU -p U:137,T:139,T:445 --script smb-enum-shares --script-args smbusername=Administrator,smbpassword=Password target_host
+```
+#### Send wake on lan (wol) packet
+```
+nmap --script broadcast-wake-on-lan --script-args broadcast-wake-on-lan.MAC='00:00:00:00:00:00'
+```
